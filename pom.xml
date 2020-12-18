@@ -6,7 +6,7 @@
 
     <groupId>club.rigox.scoreboard</groupId>
     <artifactId>Scoreboard-API</artifactId>
-    <version>0.1-BETA</version>
+    <version>1.0</version>
     <packaging>jar</packaging>
 
     <name>Scoreboard API</name>
@@ -67,7 +67,6 @@
             <url>https://repo.extendedclip.com/content/repositories/placeholderapi/</url>
         </repository>
     </repositories>
-
     <dependencies>
         <dependency>
             <groupId>com.destroystokyo.paper</groupId>

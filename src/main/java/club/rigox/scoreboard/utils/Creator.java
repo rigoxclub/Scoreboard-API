@@ -42,7 +42,7 @@ public class Creator {
             registerNewTeam.addEntry(this.getEntry(line));
             this.setPrefix(registerNewTeam, splitStringLine[0]);
             this.setSuffix(registerNewTeam, splitStringLine[1]);
-            this.scoreObjective.getScore(this.getEntry(line)).setScore(line);
+            this.scoreObjective.getScore(this.getEntry(line)).setScore((int) line);
         } else {
             this.setPrefix(team, splitStringLine[0]);
             this.setSuffix(team, splitStringLine[1]);
