@@ -42,7 +42,7 @@ public class Creator {
             registerNewTeam.addEntry(this.getEntry(line));
             this.setPrefix(registerNewTeam, splitStringLine[0]);
             this.setSuffix(registerNewTeam, splitStringLine[1]);
-            this.scoreObjective.getScore(this.getEntry(line)).setScore((int) line);
+            this.scoreObjective.getScore(this.getEntry(line)).setScore(line);
         } else {
             this.setPrefix(team, splitStringLine[0]);
             this.setSuffix(team, splitStringLine[1]);
@@ -61,7 +61,7 @@ public class Creator {
         if (s.length() > 16) {
             team.setSuffix(this.maxChars(16, s));
         } else {
-            team.setSuffix(s.substring(0, s.length()));
+            team.setSuffix(s);
         }
     }
 
@@ -129,23 +129,27 @@ public class Creator {
     }
 
     private String[] splitStringLine(final String s) {
-        final StringBuilder sb = new StringBuilder(s.substring(0, (s.length() >= 16) ? 16 : s.length()));
+        final StringBuilder sb = new StringBuilder(s.substring(0, Math.min(s.length(), 16)));
         final StringBuilder sb2 = new StringBuilder((s.length() > 16) ? s.substring(16) : "");
+
         if (sb.toString().length() > 1 && sb.charAt(sb.length() - 1) == '§') {
             sb.deleteCharAt(sb.length() - 1);
             sb2.insert(0, '§');
         }
-        String string = "";
+
+        StringBuilder string = new StringBuilder();
         for (int i = 0; i < sb.toString().length(); ++i) {
             if (sb.toString().charAt(i) == '§' && i < sb.toString().length() - 1) {
-                string = string + "§" + sb.toString().charAt(i + 1);
+                string.append("§").append(sb.toString().charAt(i + 1));
             }
         }
-        String string2 = new StringBuilder().append((Object) sb2).toString();
+
+        String string2 = String.valueOf(sb2);
+
         if (sb.length() > 14) {
-            string2 = (string.isEmpty() ? ("§" + string2) : (string + string2));
+            string2 = ((string.length() == 0) ? ("§" + string2) : (string + string2));
         }
-        return new String[]{(sb.toString().length() > 16) ? sb.substring(0, 16) : sb.toString(), (string2.length() > 16) ? string2.toString().substring(0, 16) : string2.toString()};
+        return new String[]{(sb.toString().length() > 16) ? sb.substring(0, 16) : sb.toString(), (string2.length() > 16) ? string2.substring(0, 16) : string2};
     }
 
 }
