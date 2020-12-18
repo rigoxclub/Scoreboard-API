@@ -7,6 +7,8 @@ import org.bukkit.entity.Player;
 import java.security.SecureRandom;
 import java.util.Objects;
 
+import static club.rigox.scoreboard.utils.Console.parseField;
+
 public class API {
     private final ScoreboardAPI plugin;
 
