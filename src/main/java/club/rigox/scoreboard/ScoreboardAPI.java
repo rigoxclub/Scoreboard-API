@@ -1,7 +1,9 @@
 package club.rigox.scoreboard;
 
+import club.rigox.scoreboard.commands.ScoreboardCMD;
 import club.rigox.scoreboard.listeners.PlayerListener;
 import club.rigox.scoreboard.utils.API;
+import co.aikar.commands.PaperCommandManager;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -27,6 +29,7 @@ public final class ScoreboardAPI extends JavaPlugin {
 
         loadHooks();
         registerListeners();
+        registerCommands();
 
         info("ScoreboardAPI has been enabled!");
     }
@@ -58,6 +61,15 @@ public final class ScoreboardAPI extends JavaPlugin {
         return cfg;
     }
 
+    public void reloadSetting() {
+        try {
+            getSetting().save(new File(getDataFolder(), "settings.yml"));
+        } catch (IOException e) {
+            warn(String.format("A error ocurred while saving settings.yml to the plugin data folder. Error: %s" , e));
+            e.printStackTrace();
+        }
+    }
+
     public void loadHooks() {
         if (getServer().getPluginManager().getPlugin("PlaceholderAPI") == null) {
             warn("Could not find PlaceholderAPI! This plugin is required.");
@@ -70,5 +82,11 @@ public final class ScoreboardAPI extends JavaPlugin {
     public void registerListeners() {
         new PlayerListener(this);
         info("Listeners has been registered!");
+    }
+
+    public void registerCommands() {
+        PaperCommandManager manager = new PaperCommandManager(this);
+        manager.registerCommand(new ScoreboardCMD(this));
+        info("Commands has been registered!");
     }
 }
