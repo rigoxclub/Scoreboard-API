@@ -5,19 +5,26 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import static club.rigox.scoreboard.utils.Console.debug;
-import static club.rigox.scoreboard.utils.Console.warn;
-
 import java.io.File;
 import java.io.IOException;
 
+import static club.rigox.scoreboard.utils.Console.*;
+
 public final class ScoreboardAPI extends JavaPlugin {
     public static ScoreboardAPI instance;
+
+    private FileConfiguration setting;
 
     @Override
     public void onEnable() {
         instance = this;
 
+        this.setting = createSetting();
+        info("ScoreboardAPI has been enabled!");
+    }
+
+    public FileConfiguration getSetting() {
+        return setting;
     }
 
     public FileConfiguration createSetting() {

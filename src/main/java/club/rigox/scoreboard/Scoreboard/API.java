@@ -1,15 +1,17 @@
 package club.rigox.scoreboard.Scoreboard;
 
+import club.rigox.scoreboard.ScoreboardAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.security.SecureRandom;
 import java.util.Objects;
 
 public class API {
-    private final API plugin;
+    private final ScoreboardAPI plugin;
 
 
-    public API(API plugin) {
+    public API(ScoreboardAPI plugin) {
         this.plugin = plugin;
     }
 
@@ -19,10 +21,10 @@ public class API {
 
         ScoreboardCreator scoreboard = new ScoreboardCreator(randomString(8), health);
 
-        scoreboard.setName(Objects.requireNonNull(plugin.getScoreboard().getString(type + ".title")));
+        scoreboard.setName(Objects.requireNonNull(plugin.getSetting().getString(type + ".title")));
 
-        int i = plugin.getScoreboard().getStringList(type + ".body").size();
-        for (String line : plugin.getScoreboard().getStringList(type + ".body")) {
+        int i = plugin.getSetting().getStringList(type + ".body").size();
+        for (String line : plugin.getSetting().getStringList(type + ".body")) {
             scoreboard.lines(i, parseField(line, p));
             i--;
         }
