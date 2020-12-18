@@ -23,24 +23,6 @@ public class Creator {
         this.scoreObjective.setDisplaySlot(DisplaySlot.SIDEBAR);
     }
 
-    public void updateLife() {
-        for (Player onlinePlayers : Bukkit.getOnlinePlayers()) {
-            final Player player2;
-            final Player player = player2 = onlinePlayers;
-            this.tablingHealthObj.getScore(player.getName()).setScore((int) (player2).getHealth() + absorpHearts(player2));
-        }
-    }
-
-    private int absorpHearts(Player pl) {
-        for (PotionEffect pe : pl.getActivePotionEffects()) {
-            if (pe.getType().equals(PotionEffectType.ABSORPTION)) {
-                int amt = pe.getAmplifier() * 2 + 2;
-                return amt;
-            }
-        }
-        return 0;
-    }
-
     public String color(final String s) {
         return s.replaceAll("&", "§");
     }
@@ -68,16 +50,6 @@ public class Creator {
             this.setPrefix(team, splitStringLine[0]);
             this.setSuffix(team, splitStringLine[1]);
         }
-    }
-
-    public boolean dLine(final Integer line) {
-        final Team team = this.scoreboard.getTeam("SCT_" + line);
-        if (team != null) {
-            team.unregister();
-            scoreObjective.getScoreboard().resetScores(getEntry(line));
-            return true;
-        }
-        return false;
     }
 
     public void setPrefix(final Team team, final String prefix) {
@@ -157,18 +129,6 @@ public class Creator {
 
     public Scoreboard getScoreboard() {
         return this.scoreboard;
-    }
-
-    public boolean isReset() {
-        return this.reset;
-    }
-
-    public void setReset(final boolean reset) {
-        this.reset = reset;
-    }
-
-    public void build(final Player player) {
-        player.setScoreboard(this.scoreboard);
     }
 
     private String[] splitStringLine(final String s) {

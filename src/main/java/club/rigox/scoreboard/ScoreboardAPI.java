@@ -1,5 +1,7 @@
 package club.rigox.scoreboard;
 
+import club.rigox.scoreboard.listeners.PlayerListener;
+import club.rigox.scoreboard.utils.API;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -13,14 +15,19 @@ import static club.rigox.scoreboard.utils.Console.*;
 public final class ScoreboardAPI extends JavaPlugin {
     public static ScoreboardAPI instance;
 
+    private API scoreboard;
     private FileConfiguration setting;
 
     @Override
     public void onEnable() {
         instance = this;
 
+        this.scoreboard = new API(this);
         this.setting = createSetting();
+
         loadHooks();
+        registerListeners();
+
         info("ScoreboardAPI has been enabled!");
     }
 
@@ -28,17 +35,22 @@ public final class ScoreboardAPI extends JavaPlugin {
         return setting;
     }
 
+    public API getScoreboard() {
+        return scoreboard;
+    }
+
     public FileConfiguration createSetting() {
         File configFile = new File(getDataFolder(), "settings.yml");
         if (!configFile.exists()) {
             configFile.getParentFile().mkdirs();
             saveResource( "settings.yml", false);
-            debug("settings.yml");
+            debug("settings.yml has been created!");
         }
 
         FileConfiguration cfg = new YamlConfiguration();
         try {
             cfg.load(configFile);
+            info("settings.yml has been loaded!");
         } catch (IOException | InvalidConfigurationException e) {
             warn(String.format("A error occurred while copying the settings.yml to the plugin data folder. Error: %s", e));
             e.printStackTrace();
@@ -50,6 +62,13 @@ public final class ScoreboardAPI extends JavaPlugin {
         if (getServer().getPluginManager().getPlugin("PlaceholderAPI") == null) {
             warn("Could not find PlaceholderAPI! This plugin is required.");
             getServer().getPluginManager().disablePlugin(this);
+            return;
         }
+        info("Successfully hooked with PlaceholderAPI!");
+    }
+
+    public void registerListeners() {
+        new PlayerListener(this);
+        info("Listeners has been registered!");
     }
 }

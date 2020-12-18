@@ -17,7 +17,7 @@ public class API {
         this.plugin = plugin;
     }
 
-    public Creator setScoreBoard(Player p, String type, boolean health) {
+    public void setScoreBoard(Player p, String type, boolean health) {
 
         p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 
@@ -30,10 +30,7 @@ public class API {
             scoreboard.lines(i, parseField(line, p));
             i--;
         }
-
         p.setScoreboard(scoreboard.getScoreboard());
-
-        return scoreboard;
     }
 
     private String randomString(int length) {
