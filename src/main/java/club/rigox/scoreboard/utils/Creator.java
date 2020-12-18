@@ -11,11 +11,8 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
 public class Creator {
-    private boolean reset;
-
-    private Scoreboard scoreboard;
-    private Objective scoreObjective;
-    private Objective tablingHealthObj;
+    private final Scoreboard scoreboard;
+    private final Objective scoreObjective;
 
     public Creator(final String score_name) {
         this.scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
