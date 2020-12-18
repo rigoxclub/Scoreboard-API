@@ -1,4 +1,4 @@
-![](https://i.imgur.com/OcK67UY.png "Banner")
+![](https://i.imgur.com/9gzOSq5.png "Banner")
 
 # Scoreboard
 This is a scoreboard system for Rigox Club. This is not
