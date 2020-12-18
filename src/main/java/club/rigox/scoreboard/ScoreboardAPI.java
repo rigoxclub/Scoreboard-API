@@ -20,6 +20,7 @@ public final class ScoreboardAPI extends JavaPlugin {
         instance = this;
 
         this.setting = createSetting();
+        loadHooks();
         info("ScoreboardAPI has been enabled!");
     }
 
@@ -43,5 +44,12 @@ public final class ScoreboardAPI extends JavaPlugin {
             e.printStackTrace();
         }
         return cfg;
+    }
+
+    public void loadHooks() {
+        if (getServer().getPluginManager().getPlugin("PlaceholderAPI") == null) {
+            warn("Could not find PlaceholderAPI! This plugin is required.");
+            getServer().getPluginManager().disablePlugin(this);
+        }
     }
 }

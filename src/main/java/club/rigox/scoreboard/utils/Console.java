@@ -1,7 +1,9 @@
 package club.rigox.scoreboard.utils;
 
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
 public class Console {
 
@@ -19,5 +21,9 @@ public class Console {
 
     public static void info(String str) {
         Bukkit.getConsoleSender().sendMessage(color(String.format("&f[&aINFO &7| &fScoreboardAPI&f] %s", str)));
+    }
+
+    public static String parseField(String field, Player p) {
+        return ChatColor.translateAlternateColorCodes('&', PlaceholderAPI.setPlaceholders(p, field));
     }
 }
