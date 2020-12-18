@@ -17,7 +17,7 @@ public class Creator {
     private Objective scoreObjective;
     private Objective tablingHealthObj;
 
-    public Creator(final String score_name, final boolean health) {
+    public Creator(final String score_name) {
         this.scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
         this.scoreObjective = this.scoreboard.registerNewObjective(score_name, "dummy", "test");
         this.scoreObjective.setDisplaySlot(DisplaySlot.SIDEBAR);

@@ -17,11 +17,11 @@ public class API {
         this.plugin = plugin;
     }
 
-    public void setScoreBoard(Player p, String type, boolean health) {
+    public void setScoreBoard(Player p, String type) {
 
         p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 
-        Creator scoreboard = new Creator(randomString(8), health);
+        Creator scoreboard = new Creator(randomString(8));
 
         scoreboard.setName(Objects.requireNonNull(plugin.getSetting().getString(type + ".title")));
 
