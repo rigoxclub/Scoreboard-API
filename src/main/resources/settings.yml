@@ -1,0 +1,35 @@
+general:
+  title: "&c&lRigox &7| &fVanilla"
+  body:
+    - ""
+    - "&fPlayer: &b%player_name%"
+    - ""
+    - "Rank: &e%luckperms_primary_group_name%"
+    - "Credits: &e%cherry_credits%"
+    - ""
+    - "&fVoteParty: &a6&7/30"
+    - ""
+    - "&crigox.club"
+
+staff-mode:
+  title: "&c&lRigox &7| &fStaff Mode"
+  body:
+    - ""
+    - "&fPlayer: &b%player_name%"
+    - ""
+    - "Vanish: &e%vanillacore_vanished%"
+    - ""
+    - "&crigox.club"
+
+
+freeze:
+  title: "&c&lRigox &7| &fFrozed"
+  body:
+    - ""
+    - "&eReview the chat!"
+    - ""
+    - "&7Please don't disconnect"
+    - "&7from the server until a"
+    - "&7staff screenshared you."
+    - ""
+    - "&crigox.club"

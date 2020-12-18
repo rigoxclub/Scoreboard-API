@@ -1,6 +1,6 @@
-name: Scoreboard API
+name: ScoreboardAPI
 version: ${project.version}
-main: club.rigox.scoreboard.scoreboardapi.ScoreboardAPI
+main: club.rigox.scoreboard.ScoreboardAPI
 api-version: 1.16
 authors: [ sebastn_chan ]
 description: Scoreboard System of Rigox Club.

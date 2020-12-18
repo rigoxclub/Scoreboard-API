@@ -1,4 +1,4 @@
-package club.rigox.scoreboard.Scoreboard;
+package club.rigox.scoreboard.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -10,14 +10,14 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
-public class ScoreboardCreator {
+public class Creator {
     private boolean reset;
 
     private Scoreboard scoreboard;
     private Objective scoreObjective;
     private Objective tablingHealthObj;
 
-    public ScoreboardCreator(final String score_name, final boolean health) {
+    public Creator(final String score_name, final boolean health) {
         this.scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
         this.scoreObjective = this.scoreboard.registerNewObjective(score_name, "dummy", "test");
         this.scoreObjective.setDisplaySlot(DisplaySlot.SIDEBAR);

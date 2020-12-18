@@ -1,4 +1,4 @@
-package club.rigox.scoreboard.Scoreboard;
+package club.rigox.scoreboard.utils;
 
 import club.rigox.scoreboard.ScoreboardAPI;
 import org.bukkit.Bukkit;
@@ -17,11 +17,11 @@ public class API {
         this.plugin = plugin;
     }
 
-    public ScoreboardCreator setScoreBoard(Player p, String type, boolean health) {
+    public Creator setScoreBoard(Player p, String type, boolean health) {
 
         p.setScoreboard(Bukkit.getScoreboardManager().getNewScoreboard());
 
-        ScoreboardCreator scoreboard = new ScoreboardCreator(randomString(8), health);
+        Creator scoreboard = new Creator(randomString(8), health);
 
         scoreboard.setName(Objects.requireNonNull(plugin.getSetting().getString(type + ".title")));
 
