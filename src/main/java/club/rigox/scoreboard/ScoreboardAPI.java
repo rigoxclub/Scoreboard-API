@@ -61,15 +61,6 @@ public final class ScoreboardAPI extends JavaPlugin {
         return cfg;
     }
 
-    public void reloadSetting() {
-        try {
-            getSetting().save(new File(getDataFolder(), "settings.yml"));
-        } catch (IOException e) {
-            warn(String.format("A error ocurred while saving settings.yml to the plugin data folder. Error: %s" , e));
-            e.printStackTrace();
-        }
-    }
-
     public void loadHooks() {
         if (getServer().getPluginManager().getPlugin("PlaceholderAPI") == null) {
             warn("Could not find PlaceholderAPI! This plugin is required.");
