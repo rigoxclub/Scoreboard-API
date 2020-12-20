@@ -1,9 +1,7 @@
 package club.rigox.scoreboard;
 
-import club.rigox.scoreboard.commands.ScoreboardCMD;
 import club.rigox.scoreboard.listeners.PlayerListener;
 import club.rigox.scoreboard.utils.API;
-import co.aikar.commands.PaperCommandManager;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -29,7 +27,6 @@ public final class ScoreboardAPI extends JavaPlugin {
 
         loadHooks();
         registerListeners();
-        registerCommands();
 
         info("ScoreboardAPI has been enabled!");
     }
@@ -73,11 +70,5 @@ public final class ScoreboardAPI extends JavaPlugin {
     public void registerListeners() {
         new PlayerListener(this);
         info("Listeners has been registered!");
-    }
-
-    public void registerCommands() {
-        PaperCommandManager manager = new PaperCommandManager(this);
-        manager.registerCommand(new ScoreboardCMD(this));
-        info("Commands has been registered!");
     }
 }

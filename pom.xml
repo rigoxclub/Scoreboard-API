@@ -18,6 +18,26 @@
     </properties>
     <url>https://rigox.club</url>
 
+    <licenses>
+        <license>
+            <name>Apache 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>sebastnchan</id>
+            <name>Sebastian Chan</name>
+            <organization>Rigox</organization>
+            <organizationUrl>https://rigox.club</organizationUrl>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <timezone>0</timezone>
+        </developer>
+    </developers>
+
     <build>
         <plugins>
             <plugin>
