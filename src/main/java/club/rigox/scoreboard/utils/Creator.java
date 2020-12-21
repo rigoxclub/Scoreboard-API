@@ -1,5 +1,6 @@
 package club.rigox.scoreboard.utils;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -18,9 +19,9 @@ public class Creator {
 
     private final Scoreboard bukkitScoreboard;
     private final Objective obj;
+    private final List<Row> rowCache = new ArrayList<>();
 
     private Row[] rows = new Row[0];
-    private List<Row> rowCache = new ArrayList<>();
 
     private boolean finished = false;
 
@@ -30,18 +31,18 @@ public class Creator {
         this.score_name = score_name;
 
         this.bukkitScoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
-        this.obj = this.bukkitScoreboard.registerNewObjective(randomString(8), "dummy", "test");
+        this.obj = this.bukkitScoreboard.registerNewObjective(randomString(), "dummy", "test");
 
         this.obj.setDisplaySlot(DisplaySlot.SIDEBAR);
         this.obj.setDisplayName(color(score_name));
     }
 
-    private String randomString(int length) {
+    private String randomString() {
         String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
         SecureRandom rnd = new SecureRandom();
 
-        StringBuilder sb = new StringBuilder(length);
-        for (int i = 0; i < length; i++)
+        StringBuilder sb = new StringBuilder(4);
+        for (int i = 0; i < 8; i++)
             sb.append(AB.charAt(rnd.nextInt(AB.length())));
         return sb.toString();
     }
@@ -50,22 +51,14 @@ public class Creator {
         player.setScoreboard(this.bukkitScoreboard);
     }
 
-    public Row addRow(String message) {
+    public void addRow(String message) {
         if (this.finished) {
             warn("Can't add rows since the scoreboard it's marked as finished.");
-            return null;
+            return;
         }
 
-        final Row row = new Row(this, message, rows.length);
+        final Row row = new Row(this, message);
         this.rowCache.add(row);
-        return row;
-
-    }
-
-    public void setTitle(String score_name){
-        this.score_name = score_name;
-
-        this.obj.setDisplayName(score_name);
     }
 
     public void finish() {
@@ -95,7 +88,7 @@ public class Creator {
         private Team team;
         private String message;
 
-        public Row (Creator sb, String message, int row) {
+        public Row (Creator sb, String message) {
             this.scoreboard = sb;
             this.message = message;
         }

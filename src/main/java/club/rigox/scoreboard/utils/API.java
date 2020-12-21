@@ -22,7 +22,6 @@ public class API {
 
         scoreboard.finish();
         scoreboard.display(player);
-
     }
 
 }

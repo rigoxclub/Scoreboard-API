@@ -21,6 +21,6 @@ public class PlayerListener implements Listener {
         Player player = e.getPlayer();
 
         debug(String.format("Scoreboard for %s set on join!", player));
-        scoreboardAPI.getNewAPI().setScoreboard(player, "general");
+        scoreboardAPI.getAPI().setScoreboard(player, "general");
     }
 }

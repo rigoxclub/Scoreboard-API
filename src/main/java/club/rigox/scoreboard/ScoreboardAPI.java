@@ -2,6 +2,7 @@ package club.rigox.scoreboard;
 
 import club.rigox.scoreboard.listeners.PlayerListener;
 import club.rigox.scoreboard.utils.API;
+import club.rigox.scoreboard.utils.Creator;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -18,6 +19,7 @@ public final class ScoreboardAPI extends JavaPlugin {
     private FileConfiguration setting;
 
     private API API;
+    private Creator creator;
 
     @Override
     public void onEnable() {
@@ -36,9 +38,10 @@ public final class ScoreboardAPI extends JavaPlugin {
         return setting;
     }
 
-    public API getNewAPI() {
+    public API getAPI() {
         return API;
     }
+
     public FileConfiguration createSetting() {
         File configFile = new File(getDataFolder(), "settings.yml");
         if (!configFile.exists()) {
