@@ -1,27 +1,44 @@
 package club.rigox.scoreboard.utils;
 
-import club.rigox.scoreboard.ScoreboardAPI;
 import org.bukkit.entity.Player;
 
+import static club.rigox.scoreboard.utils.Console.color;
 import static club.rigox.scoreboard.utils.Console.parseField;
 
 public class API {
-    private final ScoreboardAPI scoreboardAPI;
     private Creator scoreboard;
 
-    public API (ScoreboardAPI plugin) {
-        this.scoreboardAPI = plugin;
-    }
+    Creator.Row playerLine;
+    Creator.Row ranksLine;
+    Creator.Row creditsLine;
+    Creator.Row votePartyLine;
 
-    public void setScoreboard(Player player, String type) {
-        scoreboard = new Creator(scoreboardAPI.getSetting().getString(type + ".title"));
+    public void setScoreboard(Player player) {
+        scoreboard = new Creator("&c&lRigox &7| &fVanilla");
 
-        for (String line : scoreboardAPI.getSetting().getStringList(type + ".body")) {
-            scoreboard.addRow(parseField(line, player));
-        }
+        setNormalRows(player);
 
         scoreboard.finish();
         scoreboard.display(player);
     }
 
+    public void setNormalRows(Player player) {
+        scoreboard.addRow("");
+        playerLine = scoreboard.addRow(parseField("&fPlayer: &b%player_name%", player));
+        scoreboard.addRow("");
+        ranksLine = scoreboard.addRow(parseField("&fRank: &e%luckperms_primary_group_name%", player));
+        creditsLine = scoreboard.addRow(parseField("&fCredits: &e%cherry_credits%", player));
+        scoreboard.addRow("");
+        votePartyLine = scoreboard.addRow(parseField("&fVoteParty: &a6&7/30", player));
+        scoreboard.addRow("");
+        scoreboard.addRow(color("&crigox.club"));
+    }
+
+    public Creator.Row getPlayerLine() {
+        return playerLine;
+    }
+
+    public Creator.Row getCreditsLine() {
+        return creditsLine;
+    }
 }

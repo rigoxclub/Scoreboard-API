@@ -1,6 +1,5 @@
 package club.rigox.scoreboard.utils;
 
-import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -51,14 +50,15 @@ public class Creator {
         player.setScoreboard(this.bukkitScoreboard);
     }
 
-    public void addRow(String message) {
+    public Row addRow(String message) {
         if (this.finished) {
             warn("Can't add rows since the scoreboard it's marked as finished.");
-            return;
+            return null;
         }
 
         final Row row = new Row(this, message);
         this.rowCache.add(row);
+        return row;
     }
 
     public void finish() {
@@ -81,6 +81,10 @@ public class Creator {
             row.setMessage(row.message);
         }
         this.rows = rowCache.toArray(new Row[0]);
+    }
+
+    public void getRow (int line) {
+        rowCache.get(line);
     }
 
     public class Row {

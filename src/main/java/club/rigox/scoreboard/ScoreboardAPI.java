@@ -25,7 +25,7 @@ public final class ScoreboardAPI extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        this.API = new API(this);
+        this.API = new API();
         this.setting = createSetting();
 
         loadHooks();
