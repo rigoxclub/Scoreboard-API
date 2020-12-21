@@ -19,7 +19,6 @@ public final class ScoreboardAPI extends JavaPlugin {
     private FileConfiguration setting;
 
     private API API;
-    private Creator creator;
 
     @Override
     public void onEnable() {

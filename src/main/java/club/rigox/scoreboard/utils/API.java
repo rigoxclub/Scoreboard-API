@@ -2,13 +2,13 @@ package club.rigox.scoreboard.utils;
 
 import club.rigox.scoreboard.ScoreboardAPI;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
-import static club.rigox.scoreboard.utils.Console.debug;
+import static club.rigox.scoreboard.utils.Console.parseField;
 
 public class API {
     private final ScoreboardAPI scoreboardAPI;
     private Creator scoreboard;
+
 
     public API (ScoreboardAPI plugin) {
         this.scoreboardAPI = plugin;
@@ -18,15 +18,18 @@ public class API {
         scoreboard = new Creator("&c&lRigox &7| &fVanilla");
 
         for (String line : scoreboardAPI.getSetting().getStringList("general.body")) {
-            scoreboard.addRow(line);
+            scoreboard.addRow(parseField(line, player));
         }
 
         scoreboard.finish();
         scoreboard.display(player);
     }
 
+    public void setLineMessage(int line, String str, Player player) {
+        scoreboard.getRow(line).setMessage(parseField(str, player));
+    }
 
-//    I SHOULDN'T DO THIS.  I SHOULDN'T DO THIS.  I SHOULDN'T DO THIS.  I SHOULDN'T DO THIS.  I SHOULDN'T DO THIS.
+    //    I SHOULDN'T DO THIS.  I SHOULDN'T DO THIS.  I SHOULDN'T DO THIS.  I SHOULDN'T DO THIS.  I SHOULDN'T DO THIS.
 //    public void setNormalRows(Player player) {
 //        scoreboard.addRow("");
 //        playerLine = scoreboard.addRow(parseField("&fPlayer: &b%player_name%", player));
