@@ -15,14 +15,15 @@ import static club.rigox.scoreboard.utils.Console.*;
 public final class ScoreboardAPI extends JavaPlugin {
     public static ScoreboardAPI instance;
 
-    private API scoreboard;
     private FileConfiguration setting;
+
+    private API API;
 
     @Override
     public void onEnable() {
         instance = this;
 
-        this.scoreboard = new API(this);
+        this.API = new API(this);
         this.setting = createSetting();
 
         loadHooks();
@@ -35,10 +36,9 @@ public final class ScoreboardAPI extends JavaPlugin {
         return setting;
     }
 
-    public API getScoreboard() {
-        return scoreboard;
+    public API getNewAPI() {
+        return API;
     }
-
     public FileConfiguration createSetting() {
         File configFile = new File(getDataFolder(), "settings.yml");
         if (!configFile.exists()) {

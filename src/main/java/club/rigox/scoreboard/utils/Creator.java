@@ -2,151 +2,153 @@ package club.rigox.scoreboard.utils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.List;
+
+import static club.rigox.scoreboard.utils.Console.*;
+
 public class Creator {
-    private final Scoreboard scoreboard;
-    private final Objective scoreObjective;
 
-    public Creator(final String score_name) {
-        this.scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
-        this.scoreObjective = this.scoreboard.registerNewObjective(score_name, "dummy", "test");
-        this.scoreObjective.setDisplaySlot(DisplaySlot.SIDEBAR);
+    private final Scoreboard bukkitScoreboard;
+    private final Objective obj;
+
+    private Row[] rows = new Row[0];
+    private List<Row> rowCache = new ArrayList<>();
+
+    private boolean finished = false;
+
+    String score_name;
+
+    public Creator(String score_name) {
+        this.score_name = score_name;
+
+        this.bukkitScoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
+        this.obj = this.bukkitScoreboard.registerNewObjective(randomString(8), "dummy", "test");
+
+        this.obj.setDisplaySlot(DisplaySlot.SIDEBAR);
+        this.obj.setDisplayName(color(score_name));
     }
 
-    public String color(final String s) {
-        return s.replaceAll("&", "§");
+    private String randomString(int length) {
+        String AB = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        SecureRandom rnd = new SecureRandom();
+
+        StringBuilder sb = new StringBuilder(length);
+        for (int i = 0; i < length; i++)
+            sb.append(AB.charAt(rnd.nextInt(AB.length())));
+        return sb.toString();
     }
 
-    public void setName(String substring) {
-        if (substring.length() > 32) {
-            substring = substring.substring(0, 32);
+    public void display (Player player) {
+        player.setScoreboard(this.bukkitScoreboard);
+    }
+
+    public Row addRow(String message) {
+        if (this.finished) {
+            warn("Can't add rows since the scoreboard it's marked as finished.");
+            return null;
         }
-        this.scoreObjective.setDisplayName(this.color(substring));
+
+        final Row row = new Row(this, message, rows.length);
+        this.rowCache.add(row);
+        return row;
+
     }
 
-    public void lines(final Integer line, String text) {
-        final Team team = this.scoreboard.getTeam("SCT_" + line);
-        if (text.length() > 32) {
-            text = text.substring(0, 32);
-        }
-        final String[] splitStringLine = this.splitStringLine(text);
-        if (team == null) {
-            final Team registerNewTeam = this.scoreboard.registerNewTeam("SCT_" + line);
-            registerNewTeam.addEntry(this.getEntry(line));
-            this.setPrefix(registerNewTeam, splitStringLine[0]);
-            this.setSuffix(registerNewTeam, splitStringLine[1]);
-            this.scoreObjective.getScore(this.getEntry(line)).setScore((int) line);
-        } else {
-            this.setPrefix(team, splitStringLine[0]);
-            this.setSuffix(team, splitStringLine[1]);
-        }
+    public void setTitle(String score_name){
+        this.score_name = score_name;
+
+        this.obj.setDisplayName(score_name);
     }
 
-    public void setPrefix(final Team team, final String prefix) {
-        if (prefix.length() > 16) {
-            team.setPrefix(prefix.substring(0, 16));
+    public void finish() {
+        if (this.finished) {
+            warn("Can't finish the scoreboard since it is already finished.");
             return;
         }
-        team.setPrefix(prefix);
+
+        this.finished = true;
+
+        for (int i = rowCache.size() - 1; i >= 0; i--){
+            final Row row = rowCache.get(i);
+            final Team team = this.bukkitScoreboard.registerNewTeam("dummy.test." + (i+1));
+
+            team.addEntry(ChatColor.values()[i] + "");
+
+            this.obj.getScore(ChatColor.values()[i] + "").setScore(rowCache.size()-i);
+
+            row.team = team;
+            row.setMessage(row.message);
+        }
+        this.rows = rowCache.toArray(new Row[0]);
     }
 
-    public void setSuffix(final Team team, final String s) {
-        if (s.length() > 16) {
-            team.setSuffix(this.maxChars(16, s));
-        } else {
-            team.setSuffix(s);
-        }
-    }
+    public class Row {
+        private final Creator scoreboard;
+        private Team team;
+        private String message;
 
-    public String maxChars(final int n, final String s) {
-        if (ChatColor.translateAlternateColorCodes('&', s).length() > n) {
-            return s.substring(0, n);
-        }
-        return ChatColor.translateAlternateColorCodes('&', s);
-    }
-
-    public String getEntry(final Integer n) {
-        if (n == 0) {
-            return "§0";
-        }
-        if (n == 1) {
-            return "§1";
-        }
-        if (n == 2) {
-            return "§2";
-        }
-        if (n == 3) {
-            return "§3";
-        }
-        if (n == 4) {
-            return "§4";
-        }
-        if (n == 5) {
-            return "§5";
-        }
-        if (n == 6) {
-            return "§6";
-        }
-        if (n == 7) {
-            return "§7";
-        }
-        if (n == 8) {
-            return "§8";
-        }
-        if (n == 9) {
-            return "§9";
-        }
-        if (n == 10) {
-            return "§a";
-        }
-        if (n == 11) {
-            return "§b";
-        }
-        if (n == 12) {
-            return "§c";
-        }
-        if (n == 13) {
-            return "§d";
-        }
-        if (n == 14) {
-            return "§e";
-        }
-        if (n == 15) {
-            return "§f";
-        }
-        return "";
-    }
-
-    public Scoreboard getScoreboard() {
-        return this.scoreboard;
-    }
-
-    private String[] splitStringLine(final String s) {
-        final StringBuilder sb = new StringBuilder(s.substring(0, Math.min(s.length(), 16)));
-        final StringBuilder sb2 = new StringBuilder((s.length() > 16) ? s.substring(16) : "");
-
-        if (sb.toString().length() > 1 && sb.charAt(sb.length() - 1) == '§') {
-            sb.deleteCharAt(sb.length() - 1);
-            sb2.insert(0, '§');
+        public Row (Creator sb, String message, int row) {
+            this.scoreboard = sb;
+            this.message = message;
         }
 
-        StringBuilder string = new StringBuilder();
-        for (int i = 0; i < sb.toString().length(); ++i) {
-            if (sb.toString().charAt(i) == '§' && i < sb.toString().length() - 1) {
-                string.append("§").append(sb.toString().charAt(i + 1));
+        public void setMessage(String message) {
+            this.message = message;
+
+            if (scoreboard.finished) {
+                final String[] parts = splitStringWithChatcolorInHalf (message);
+
+                this.team.setPrefix(parts[0]);
+                this.team.setSuffix(parts[1]);
             }
         }
-
-        String string2 = String.valueOf(sb2);
-
-        if (sb.length() > 14) {
-            string2 = ((string.length() == 0) ? ("§" + string2) : (string + string2));
-        }
-        return new String[]{(sb.toString().length() > 16) ? sb.substring(0, 16) : sb.toString(), (string2.length() > 16) ? string2.substring(0, 16) : string2};
     }
 
+    private String[] splitStringWithChatcolorInHalf (String str) {
+        final String[] strs = new String[2];
+
+        ChatColor cc1 = ChatColor.WHITE, cc2 = null;
+        Character lastChar = null;
+
+        strs[0] = "";
+        for (int i = 0; i <str.length() / 2; i++){
+            final char c = str.charAt(i);
+            if (lastChar != null) {
+                final ChatColor cc = charsToChatColor(new char[] { lastChar, c });
+                if (cc != null) {
+                    if (cc.isFormat())
+                        cc2 = cc;
+                    else {
+                        cc1 = cc;
+                        cc2 = null;
+                    }
+                }
+            }
+            strs[0] += c;
+            lastChar = c;
+        }
+        strs[1] = cc1 + "" + (cc2 != null ? cc2 : "") + str.substring(str.length()/2);
+        return strs;
+    }
+
+    private ChatColor charsToChatColor (char[] chars) {
+        for (ChatColor cc:ChatColor.values()) {
+            final char[] ccChars = cc.toString().toCharArray();
+            int same = 0;
+            for (int i = 0; i < 2; i++){
+                if (ccChars[i] == chars[i]) same++;
+            }
+            if(same == 2) return cc;
+        }
+
+        return null;
+    }
 }
