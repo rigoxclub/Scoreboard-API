@@ -20,8 +20,6 @@ public class Creator {
     private final Objective obj;
     private final List<Row> rowCache = new ArrayList<>();
 
-    private Row[] rows = new Row[0];
-
     private boolean finished = false;
 
     String score_name;
@@ -58,6 +56,8 @@ public class Creator {
 
         final Row row = new Row(this, message);
         this.rowCache.add(row);
+        debug(this.rowCache.toString());
+        debug(String.valueOf(this.rowCache.size()));
         return row;
     }
 
@@ -80,11 +80,11 @@ public class Creator {
             row.team = team;
             row.setMessage(row.message);
         }
-        this.rows = rowCache.toArray(new Row[0]);
+        Row[] rows = rowCache.toArray(new Row[0]);
     }
 
-    public void getRow (int line) {
-        rowCache.get(line);
+    public Row getRow (int line) {
+        return rowCache.get(line);
     }
 
     public class Row {
