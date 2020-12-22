@@ -6,11 +6,15 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import static club.rigox.scoreboard.utils.Console.debug;
-
+/**
+ * PlayerListener Class
+ */
 public class PlayerListener implements Listener {
     private final ScoreboardAPI scoreboardAPI;
 
+    /**
+     * @param plugin Instance for Class
+     */
     public PlayerListener(ScoreboardAPI plugin) {
         this.scoreboardAPI = plugin;
         scoreboardAPI.getServer().getPluginManager().registerEvents(this, scoreboardAPI);
@@ -19,8 +23,6 @@ public class PlayerListener implements Listener {
     @EventHandler
     private void onPlayerJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
-
-        debug(String.format("Scoreboard for %s set on join!", player));
-        scoreboardAPI.getAPI().setScoreboard(player);
+        scoreboardAPI.getAPI().setScoreboard(player, "general");
     }
 }

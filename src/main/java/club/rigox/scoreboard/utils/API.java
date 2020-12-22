@@ -5,19 +5,31 @@ import org.bukkit.entity.Player;
 
 import static club.rigox.scoreboard.utils.Console.parseField;
 
+/**
+ * API Class
+ */
 public class API {
     private final ScoreboardAPI scoreboardAPI;
     private Creator scoreboard;
 
-
+    /**
+     * @param plugin Instance of ScoreboardAPI for API.
+     */
     public API (ScoreboardAPI plugin) {
         this.scoreboardAPI = plugin;
     }
 
-    public void setScoreboard(Player player) {
-        scoreboard = new Creator("&c&lRigox &7| &fVanilla");
+    /**
+     * Sets the scoreboard to a specified player
+     * with a specified type.
+     *
+     * @param player The player to set the scoreboard on.
+     * @param type Set the scoreboard to read from the settings.yml.
+     */
+    public void setScoreboard(Player player, String type) {
+        scoreboard = new Creator(scoreboardAPI.getSetting().getString(type + ".title"));
 
-        for (String line : scoreboardAPI.getSetting().getStringList("general.body")) {
+        for (String line : scoreboardAPI.getSetting().getStringList(type + ".body")) {
             scoreboard.addRow(parseField(line, player));
         }
 
@@ -25,32 +37,13 @@ public class API {
         scoreboard.display(player);
     }
 
+    /**
+     *
+     * @param line Search for the scoreboard line you want to update.
+     * @param str Message to set on the specified line.
+     * @param player Specify player to parse for PlaceholderAPI.
+     */
     public void setLineMessage(int line, String str, Player player) {
         scoreboard.getRow(line).setMessage(parseField(str, player));
     }
-
-    //    I SHOULDN'T DO THIS.  I SHOULDN'T DO THIS.  I SHOULDN'T DO THIS.  I SHOULDN'T DO THIS.  I SHOULDN'T DO THIS.
-//    public void setNormalRows(Player player) {
-//        scoreboard.addRow("");
-//        playerLine = scoreboard.addRow(parseField("&fPlayer: &b%player_name%", player));
-//        scoreboard.addRow("");
-//        ranksLine = scoreboard.addRow(parseField("&fRank: &e%luckperms_primary_group_name%", player));
-//        creditsLine = scoreboard.addRow(parseField("&fCredits: &e%cherry_credits%", player));
-//        scoreboard.addRow("");
-//        votePartyLine = scoreboard.addRow(parseField("&fVoteParty: &a6&7/30", player));
-//        scoreboard.addRow("");
-//        scoreboard.addRow(color("&crigox.club"));
-//    }
-
-    //    Creator.Row playerLine;
-//    Creator.Row ranksLine;
-//    Creator.Row creditsLine;
-//    Creator.Row votePartyLine;
-//    public Creator.Row getPlayerLine() {
-//        return playerLine;
-//    }
-//
-//    public Creator.Row getCreditsLine() {
-//        return creditsLine;
-//    }
 }

@@ -12,8 +12,12 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
-import static club.rigox.scoreboard.utils.Console.*;
+import static club.rigox.scoreboard.utils.Console.color;
+import static club.rigox.scoreboard.utils.Console.warn;
 
+/**
+ * Creator Class
+ */
 public class Creator {
 
     private final Scoreboard bukkitScoreboard;
@@ -24,6 +28,10 @@ public class Creator {
 
     String score_name;
 
+    /**
+     * Base for creating Scoreboards.
+     * @param score_name Sets the title of the Scoreboard
+     */
     public Creator(String score_name) {
         this.score_name = score_name;
 
@@ -44,23 +52,30 @@ public class Creator {
         return sb.toString();
     }
 
+    /**
+     * Sets the scoreboard once it's marked as finished.
+     * @param player Target to set the scoreboard on.
+     */
     public void display (Player player) {
         player.setScoreboard(this.bukkitScoreboard);
     }
 
-    public Row addRow(String message) {
+    /**
+     * @param message Set scoreboard lines.
+     */
+    public void addRow(String message) {
         if (this.finished) {
             warn("Can't add rows since the scoreboard it's marked as finished.");
-            return null;
+            return;
         }
-
         final Row row = new Row(this, message);
         this.rowCache.add(row);
-        debug(this.rowCache.toString());
-        debug(String.valueOf(this.rowCache.size()));
-        return row;
     }
 
+    /**
+     * Marks the scoreboard as finished so
+     * it won't be available to add more rows.
+     */
     public void finish() {
         if (this.finished) {
             warn("Can't finish the scoreboard since it is already finished.");
@@ -80,23 +95,41 @@ public class Creator {
             row.team = team;
             row.setMessage(row.message);
         }
-        Row[] rows = rowCache.toArray(new Row[0]);
     }
 
+    /**
+     * Works for modifying scoreboard lines
+     * on other plugins instead of calling the
+     * setScoreboard method.
+     * This prevents scoreboard flickering.
+     *
+     * @param line Number to index on rowCache.
+     * @return Scoreboard line to alter.
+     */
     public Row getRow (int line) {
         return rowCache.get(line);
     }
 
+    /**
+     * Row Class
+     */
     public class Row {
         private final Creator scoreboard;
         private Team team;
         private String message;
 
+        /**
+         * @param sb Scoreboard
+         * @param message Message
+         */
         public Row (Creator sb, String message) {
             this.scoreboard = sb;
             this.message = message;
         }
 
+        /**
+         * @param message Sets the message for a row
+         */
         public void setMessage(String message) {
             this.message = message;
 

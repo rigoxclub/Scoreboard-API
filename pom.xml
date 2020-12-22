@@ -5,11 +5,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>club.rigox.scoreboard</groupId>
-    <artifactId>Scoreboard-API</artifactId>
+    <artifactId>ScoreboardAPI</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>Scoreboard API</name>
+    <name>ScoreboardAPI</name>
 
     <description>Scoreboard System of Rigox Club.</description>
     <properties>
