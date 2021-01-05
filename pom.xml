@@ -83,5 +83,10 @@
             <version>2.10.9</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.Zrips</groupId>
+            <artifactId>CMI</artifactId>
+            <version>8.7.12.7</version>
+        </dependency>
     </dependencies>
 </project>

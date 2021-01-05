@@ -1,7 +1,9 @@
 package club.rigox.scoreboard;
 
+import club.rigox.scoreboard.listeners.CMIListener;
 import club.rigox.scoreboard.listeners.PlayerListener;
 import club.rigox.scoreboard.utils.API;
+import com.Zrips.CMI.CMI;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -23,11 +25,14 @@ public final class ScoreboardAPI extends JavaPlugin {
 
     private FileConfiguration setting;
 
+    private CMI cmi;
+
     private API API;
 
     @Override
     public void onEnable() {
         instance = this;
+        cmi = CMI.getInstance();
 
         this.API = new API(this);
         this.setting = createSetting();
@@ -94,6 +99,11 @@ public final class ScoreboardAPI extends JavaPlugin {
      */
     public void registerListeners() {
         new PlayerListener(this);
+        new CMIListener(this);
         info("Listeners has been registered!");
+    }
+
+    public CMI getCMI() {
+        return cmi;
     }
 }
