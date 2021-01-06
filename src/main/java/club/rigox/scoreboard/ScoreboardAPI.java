@@ -108,8 +108,4 @@ public final class ScoreboardAPI extends JavaPlugin {
         new CMIListener(this);
         info("Listeners has been registered!");
     }
-
-    public CMI getCMI() {
-        return cmi;
-    }
 }
