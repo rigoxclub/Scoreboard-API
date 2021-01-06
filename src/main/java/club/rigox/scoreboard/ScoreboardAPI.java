@@ -25,8 +25,6 @@ public final class ScoreboardAPI extends JavaPlugin {
 
     private FileConfiguration setting;
 
-    private CMI cmi;
-
     private API API;
 
     @Override
@@ -68,7 +66,6 @@ public final class ScoreboardAPI extends JavaPlugin {
         if (!configFile.exists()) {
             configFile.getParentFile().mkdirs();
             saveResource( "settings.yml", false);
-            debug("settings.yml has been created!");
         }
 
         FileConfiguration cfg = new YamlConfiguration();
