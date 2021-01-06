@@ -30,7 +30,6 @@ public final class ScoreboardAPI extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
-        cmi = CMI.getInstance();
 
         this.API = new API(this);
         this.setting = createSetting();
