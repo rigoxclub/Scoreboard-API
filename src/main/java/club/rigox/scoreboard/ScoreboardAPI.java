@@ -3,7 +3,6 @@ package club.rigox.scoreboard;
 import club.rigox.scoreboard.listeners.CMIListener;
 import club.rigox.scoreboard.listeners.PlayerListener;
 import club.rigox.scoreboard.utils.API;
-import com.Zrips.CMI.CMI;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -12,12 +11,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.io.IOException;
 
-import static club.rigox.scoreboard.utils.Console.*;
+import static club.rigox.scoreboard.utils.Console.info;
+import static club.rigox.scoreboard.utils.Console.warn;
 
 /**
  * ScoreboardAPI Class
  */
-public final class ScoreboardAPI extends JavaPlugin {
+public final class  ScoreboardAPI extends JavaPlugin {
     /**
      * Plugin instance.
      */

@@ -2,12 +2,12 @@ general:
   title: "&c&lRigox &7| &fVanilla"
   body:
     - ""
-    - "&fPlayer: &b%player_name%"
+    - "&fNombre: &b%player_name%"
     - ""
-    - "Rank: &e%luckperms_primary_group_name%"
-    - "Credits: &e%vault_eco_balance_formatted%"
+    - "&fRango: &e%luckperms_primary_group_name%"
+    - "&fCréditos: &e%vault_eco_balance_formatted%"
     - ""
-    - "&fVoteParty: &a6&7/30"
+    - "&fVoteParty: &a6&7/30" # TODO
     - ""
     - "&crigox.club"
 
