@@ -92,6 +92,12 @@ public final class ScoreboardAPI extends JavaPlugin {
             return;
         }
         info("Successfully hooked with PlaceholderAPI!");
+
+        if (getServer().getPluginManager().getPlugin("CMI") == null || getServer().getPluginManager().getPlugin("CMIEInjector") == null) {
+            warn("Could not find CMI or CMIInjector! Please add it.");
+            return;
+        }
+        info("Successfully hooked with CMI!");
     }
 
     /**

@@ -17,8 +17,6 @@ public class CMIListener implements Listener {
 
     @EventHandler
     public void onUserBalanceChange(CMIUserBalanceChangeEvent e) {
-        debug(String.format("Player %s scoreboard has been updated by CMIUserBalanceChange Event.", e.getUser().getPlayer()));
         scoreboardAPI.getAPI().setLineMessage(4, "&fCredits: &e%vault_eco_balance_formatted%", e.getUser().getPlayer());
-
     }
 }
