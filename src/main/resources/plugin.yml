@@ -7,3 +7,7 @@ description: Scoreboard System of Rigox Club.
 website: https://rigox.club
 depend:
   - PlaceholderAPI
+  - LuckPerms
+softdepend:
+  - CMI
+  - CMIEInjector

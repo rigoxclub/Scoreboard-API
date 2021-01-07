@@ -5,8 +5,6 @@ import com.Zrips.CMI.events.CMIUserBalanceChangeEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
-import static club.rigox.scoreboard.utils.Console.debug;
-
 public class CMIListener implements Listener {
     private final ScoreboardAPI scoreboardAPI;
 

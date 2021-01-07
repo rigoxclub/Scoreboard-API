@@ -1,8 +1,10 @@
 package club.rigox.scoreboard;
 
 import club.rigox.scoreboard.listeners.CMIListener;
+import club.rigox.scoreboard.listeners.LuckPermsListener;
 import club.rigox.scoreboard.listeners.PlayerListener;
 import club.rigox.scoreboard.utils.API;
+import net.luckperms.api.LuckPerms;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -11,8 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.io.IOException;
 
-import static club.rigox.scoreboard.utils.Console.info;
-import static club.rigox.scoreboard.utils.Console.warn;
+import static club.rigox.scoreboard.utils.Console.*;
 
 /**
  * ScoreboardAPI Class
@@ -27,17 +28,43 @@ public final class  ScoreboardAPI extends JavaPlugin {
 
     private API API;
 
+    private LuckPerms luckPerms;
+
     @Override
     public void onEnable() {
         instance = this;
 
         this.API = new API(this);
+
+        loadServerStuff();
+        info("ScoreboardAPI has been enabled!");
+    }
+
+    /**
+     * Load plugin based on server specified
+     * if lobby, don't enable CMI dependency.
+     */
+    public void loadServerStuff() {
+        this.luckPerms = getServer().getServicesManager().load(LuckPerms.class);
         this.setting = createSetting();
 
         loadHooks();
-        registerListeners();
 
-        info("ScoreboardAPI has been enabled!");
+        new PlayerListener(this);
+
+        String server = getSetting().getString("server").toLowerCase();
+        switch (server) {
+            case "vanilla":
+                loadVanilla();
+                break;
+            case "lobby":
+                loadLobby();
+                break;
+            default:
+                warn("You should specify a valid added server! (Valid ones: Vanilla, Lobby)");
+                getServer().getPluginManager().disablePlugin(this);
+                break;
+        }
     }
 
     /**
@@ -78,6 +105,19 @@ public final class  ScoreboardAPI extends JavaPlugin {
         return cfg;
     }
 
+    public void loadVanilla() {
+        if (getServer().getPluginManager().getPlugin("CMI") == null || getServer().getPluginManager().getPlugin("CMIEInjector") == null) {
+            warn("Could not find CMI or CMIInjector! Please add it.");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+        new CMIListener(this);
+        info("Successfully hooked with CMI!");
+    }
+
+    public void loadLobby() {
+
+    }
     /**
      * Method to load Hooks required by the plugin.
      */
@@ -89,19 +129,12 @@ public final class  ScoreboardAPI extends JavaPlugin {
         }
         info("Successfully hooked with PlaceholderAPI!");
 
-        if (getServer().getPluginManager().getPlugin("CMI") == null || getServer().getPluginManager().getPlugin("CMIEInjector") == null) {
-            warn("Could not find CMI or CMIInjector! Please add it.");
+        if (getServer().getPluginManager().getPlugin("LuckPerms") == null) {
+            warn("Could not find LuckPerms! Please add it.");
+            getServer().getPluginManager().disablePlugin(this);
             return;
         }
-        info("Successfully hooked with CMI!");
-    }
-
-    /**
-     * Method to register Listeners available in the plugin.
-     */
-    public void registerListeners() {
-        new PlayerListener(this);
-        new CMIListener(this);
-        info("Listeners has been registered!");
+        new LuckPermsListener(this, this.luckPerms).register();
+        info("Successfully hooked with LuckPerms!");
     }
 }

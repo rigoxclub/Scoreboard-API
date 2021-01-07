@@ -1,13 +1,18 @@
+# Available options:
+# - vanilla
+# - lobby
+server: "vanilla"
+
 general:
   title: "&c&lRigox &7| &fVanilla"
   body:
     - ""
-    - "&fNombre: &b%player_name%"
+    - "Nombre:&b %player_name%"
     - ""
-    - "&fRango: &e%luckperms_primary_group_name%"
-    - "&fCréditos: &e%vault_eco_balance_formatted%"
+    - "Rango:&e %luckperms_primary_group_name%"
+    - "Créditos:&e %vault_eco_balance_formatted%"
     - ""
-    - "&fVoteParty: &a6&7/30" # TODO
+    - "VoteParty:&a 6&7/30" # TODO
     - ""
     - "&crigox.club"
 
